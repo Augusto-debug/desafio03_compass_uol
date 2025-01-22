@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { auth, provider } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 import {
   signInWithPopup,
   signOut,
@@ -17,11 +18,13 @@ const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLoginWithGoogle = async () => {
     try {
       setError("");
       await signInWithPopup(auth, provider);
+      navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer login com Google:", error);
       setError("Erro ao autenticar com o Google. Tente novamente.");
@@ -31,14 +34,13 @@ const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
   const handleLoginWithEmail = async () => {
     try {
       setError("");
-
       if (!email || !password) {
         setError("Preencha todos os campos.");
         return;
       }
-
       await signInWithEmailAndPassword(auth, email, password);
       console.log("Logado com sucesso");
+      navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer login com email:", error);
       setError("Erro ao autenticar com o email. Tente novamente.");
@@ -56,6 +58,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
 
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("Usuário criado com sucesso");
+
     } catch (error) {
       console.error("Erro ao criar usuário com email:", error);
       setError("Erro ao criar usuário com o email. Tente novamente.");
@@ -71,21 +74,6 @@ const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
       setError("Erro ao sair da conta. Tente novamente.");
     }
   };
-
-  if (user) {
-    return (
-      <div className="text-center">
-        <p>Bem-vindo, {user.displayName || user.email}</p>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded mt-5"
-        >
-          Sair
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col items-center w-full max-w-sm">
       <input
