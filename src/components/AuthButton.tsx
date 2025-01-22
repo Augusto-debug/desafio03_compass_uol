@@ -5,11 +5,14 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const AuthButton = () => {
+interface AuthButtonProps {
+  mode: "login" | "signup";
+}
+
+const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
   const [user] = useAuthState(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,16 +31,36 @@ const AuthButton = () => {
   const handleLoginWithEmail = async () => {
     try {
       setError("");
-      const createdUSer = await createUserWithEmailAndPassword(auth, email, password);
-      if(createdUSer) {
-      await signInWithEmailAndPassword(auth, email, password);
+
+      if (!email || !password) {
+        setError("Preencha todos os campos.");
+        return;
       }
+
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("Logado com sucesso");
     } catch (error) {
-        console.error("Erro ao fazer login com email:", error);
-        setError("Erro ao autenticar com o email. Tente novamente.");
-    } 
+      console.error("Erro ao fazer login com email:", error);
+      setError("Erro ao autenticar com o email. Tente novamente.");
+    }
   };
-  
+
+  const handleCreateUserWithEmail = async () => {
+    try {
+      setError("");
+
+      if (!email || !password) {
+        setError("Preencha todos os campos.");
+        return;
+      }
+
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Usuário criado com sucesso");
+    } catch (error) {
+      console.error("Erro ao criar usuário com email:", error);
+      setError("Erro ao criar usuário com o email. Tente novamente.");
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -79,22 +102,23 @@ const AuthButton = () => {
         placeholder="Senha"
         className="h-12 px-3 text-black mb-4 border rounded w-full"
       />
+
       <button
-        onClick={handleLoginWithEmail}
+        onClick={mode === "login" ? handleLoginWithEmail : handleCreateUserWithEmail}
         className="bg-green-500 text-white px-4 py-2 rounded w-full mb-4"
       >
-        Sign In
+        {mode === "login" ? "Sign In" : "Sign Up"}
       </button>
-      {}
+
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <div className="flex items-center justify-center mt-5">
         <img src="google-icon.png" alt="Google" className="mr-5" />
         <button
           onClick={handleLoginWithGoogle}
-          className=" text-white px-4 py-2 rounded"
+          className="text-white px-4 py-2 rounded"
         >
-          Sign in with Google
+          {mode === "login" ? "Sign In with Google" : "Sign Up with Google"}
         </button>
       </div>
     </div>
