@@ -3,6 +3,7 @@ import './App.css';
 import SignScreen from './components/SignInScreen';
 import SignUpScreen from './components/SignUpScreen';
 import Home from './components/Home';
+import Search from './components/Search';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<SignScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
     </div>
   );

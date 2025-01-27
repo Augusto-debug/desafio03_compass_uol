@@ -11,8 +11,8 @@ const Header = () => {
           className="h-10 w-10"
           alt="burgerMenuIcon"
         />
-        <img src="audioLogo.png" alt="audioLogo" />
-        <img src="Avatar.png" alt="avatar" />
+        <img src="audioLogo.png" alt="audioLogo" className="h-10 w-1/5" />
+        <img src="Avatar.png" alt="avatar" className="h-10 w-10"/>
       </div>
     </>
   );

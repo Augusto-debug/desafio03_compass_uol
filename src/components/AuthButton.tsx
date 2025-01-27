@@ -23,7 +23,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ mode }) => {
   const handleLoginWithGoogle = async () => {
     try {
       setError("");
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider); 
       navigate("/home");
     } catch (error) {
       console.error("Erro ao fazer login com Google:", error);
