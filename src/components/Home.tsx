@@ -4,8 +4,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import Item from "./Item";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; 
-import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 type Product = {
   id: string;
@@ -40,7 +40,8 @@ const Home = () => {
   const [userName, setUserName] = useState<string | null>(null);
   const [data, setData] = useState<Product[]>([]);
   const [filteredData, setFilteredData] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("headphones");
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("headphones");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -71,7 +72,7 @@ const Home = () => {
   const handleFilter = (category: string) => {
     setSelectedCategory(category);
     setFilteredData(data.filter((item) => item.category === category));
-  };  
+  };
   return (
     <div className="w-full h-screen overflow-x-hidden flex flex-col">
       <header className="mb-10">
@@ -87,13 +88,13 @@ const Home = () => {
             placeholder="Search Headphone"
             className="w-full h-12 pl-4 outline-none"
             onClick={handleRedirectToSearch}
-          />  
+          />
         </div>
       </header>
       <main className="bg-gray-100 rounded-3xl flex w-full justify-center items-center flex-col">
         <div className="flex flex-col">
           <div className="flex my-5 m-auto items-center">
-          <input
+            <input
               type="button"
               value="HeadPhone"
               className={`p-2 mx-8 flex cursor-pointer rounded-lg ${
@@ -116,14 +117,14 @@ const Home = () => {
           </div>
           <Carousel
             showThumbs={false}
-            autoPlay = {true}
-            infiniteLoop  
+            autoPlay={true}
+            infiniteLoop
             className="w-full mx-auto"
             width="100%"
           >
             {filteredData &&
               filteredData.map((item) => (
-                <div key={item.id} >
+                <div key={item.id}>
                   <Item
                     name={item.name}
                     category={item.category}
@@ -138,20 +139,30 @@ const Home = () => {
         <div className="w-full">
           <div className="flex justify-between">
             <p className="ml-5">Featured Products</p>
-            <button onClick={handleRedirectToAllProducts} className="mr-5">See All</button>
+            <button onClick={handleRedirectToAllProducts} className="mr-5">
+              See All
+            </button>
           </div>
-          <div className="flex flex-wrap justify-center">
-            {data &&
-              data.map((item) => (
-                <Item
-                  key={item.id}
-                  name={item.name}
-                  category={item.category}
-                  price={item.price}
-                  details={item.details}
-                  img={item.img}
-                />
+          <div className="">
+            <div className="w-4/5 mx-auto"></div>
+            <Carousel
+              showThumbs={false}
+              autoPlay={true}
+              infiniteLoop
+              width="100%"
+            >
+              {data.slice(0, 3).map((item) => (
+                <div key={item.id}>
+                  <Item
+                    name={item.name}
+                    category={item.category}
+                    price={item.price}
+                    details={item.details}
+                    img={item.img}
+                  />
+                </div>
               ))}
+            </Carousel>
           </div>
         </div>
       </main>
