@@ -4,6 +4,7 @@ import SignScreen from './components/SignInScreen';
 import SignUpScreen from './components/SignUpScreen';
 import Home from './components/Home';
 import Search from './components/Search';
+import AllProducts from './components/AllProducts';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/allProducts" element={<AllProducts />} />
         </Routes>
     </div>
   );

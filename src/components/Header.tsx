@@ -8,11 +8,11 @@ const Header = () => {
       <div className="flex justify-between items-center px-5 py-3">
         <img
           src="burgerMenuIcon.png"
-          className="h-10 w-10"
+          className="h-full w-7"
           alt="burgerMenuIcon"
         />
-        <img src="audioLogo.png" alt="audioLogo" className="h-10 w-1/5" />
-        <img src="Avatar.png" alt="avatar" className="h-10 w-10"/>
+        <img src="audioLogo.png" alt="audioLogo" className="h-full w-1/5" />
+        <img src="Avatar.png" alt="avatar" className="h-full w-7"/>
       </div>
     </>
   );

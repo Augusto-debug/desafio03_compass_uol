@@ -4,6 +4,7 @@ const Search = () => {
   return (
     <div>
         <Header /> 
+        <p>Search</p>
     </div>
   )
 }

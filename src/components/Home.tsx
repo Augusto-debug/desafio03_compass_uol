@@ -4,6 +4,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import Item from "./Item";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import { Carousel } from 'react-responsive-carousel';
 
 type Product = {
   id: string;
@@ -27,14 +29,18 @@ type Product = {
 
 const Home = () => {
   const navigate = useNavigate();
-  const handleRedirect = () => {
+  const handleRedirectToSearch = () => {
     navigate("/search");
+  };
+
+  const handleRedirectToAllProducts = () => {
+    navigate("/allProducts");
   };
 
   const [userName, setUserName] = useState<string | null>(null);
   const [data, setData] = useState<Product[]>([]);
-  console.log(data);
-  
+  const [filteredData, setFilteredData] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("headphones");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -54,11 +60,20 @@ const Home = () => {
       );
       const data = await response.json();
       setData(data);
+      const initialFilteredData = data.filter(
+        (item: Product) => item.category === "headphones"
+      );
+      setFilteredData(initialFilteredData);
     };
     fecthData();
   }, []);
+
+  const handleFilter = (category: string) => {
+    setSelectedCategory(category);
+    setFilteredData(data.filter((item) => item.category === category));
+  };  
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-screen overflow-x-hidden flex flex-col">
       <header className="mb-10">
         <Header />
         <p className="text-2xl mt-2">Hi, {userName}</p>
@@ -71,36 +86,73 @@ const Home = () => {
             type="text"
             placeholder="Search Headphone"
             className="w-full h-12 pl-4 outline-none"
-            onClick={handleRedirect}
+            onClick={handleRedirectToSearch}
           />  
         </div>
       </header>
-      <main className="bg-gray-100 rounded-3xl flex justify-center items-center flex-col">
+      <main className="bg-gray-100 rounded-3xl flex w-full justify-center items-center flex-col">
         <div className="flex flex-col">
-          <div className="flex my-5 justify-around items-center">
+          <div className="flex my-5 m-auto items-center">
           <input
-            type="button"
-            value="HeadPhone"
-            className="p-2 flex bg-green-600 rounded-lg"
-          />
-          <input
-            type="button"
-            value="HeadSet"
-            className="p-2 flex bg-green-600 rounded-lg"
-          />
+              type="button"
+              value="HeadPhone"
+              className={`p-2 mx-8 flex cursor-pointer rounded-lg ${
+                selectedCategory === "headphones"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+              onClick={() => handleFilter("headphones")}
+            />
+            <input
+              type="button"
+              value="HeadSet"
+              className={`p-2 flex cursor-pointer rounded-lg ${
+                selectedCategory === "headsets"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+              onClick={() => handleFilter("headsets")}
+            />
           </div>
-          {data &&
-            data.map((item) => (
-              <Item
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                category={item.category}
-                price={item.price}
-                details={item.details}
-                img={item.img}
-              />
-            ))}
+          <Carousel
+            showThumbs={false}
+            autoPlay = {true}
+            infiniteLoop  
+            className="w-full mx-auto"
+            width="100%"
+          >
+            {filteredData &&
+              filteredData.map((item) => (
+                <div key={item.id} >
+                  <Item
+                    name={item.name}
+                    category={item.category}
+                    price={item.price}
+                    details={item.details}
+                    img={item.img}
+                  />
+                </div>
+              ))}
+          </Carousel>
+        </div>
+        <div className="w-full">
+          <div className="flex justify-between">
+            <p className="ml-5">Featured Products</p>
+            <button onClick={handleRedirectToAllProducts} className="mr-5">See All</button>
+          </div>
+          <div className="flex flex-wrap justify-center">
+            {data &&
+              data.map((item) => (
+                <Item
+                  key={item.id}
+                  name={item.name}
+                  category={item.category}
+                  price={item.price}
+                  details={item.details}
+                  img={item.img}
+                />
+              ))}
+          </div>
         </div>
       </main>
     </div>

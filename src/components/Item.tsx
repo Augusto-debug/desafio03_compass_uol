@@ -1,5 +1,4 @@
 interface ItemProps {
-    id: string | number;  // Adjust the type based on your actual data
     name: string;
     category: string;
     price: number;
@@ -7,14 +6,14 @@ interface ItemProps {
     img: string;
   }
 
-const Item = ({ id, name, category , price , details, img } : ItemProps) => {
+const Item = ({ name, category , price , details, img } : ItemProps) => {
   return (
-    <div className="flex flex-col items-center justify-center  ">
-      <img src={img} alt={name} />
-      <p>{name}</p>
-      <p>{category}</p>
-      <p>{price}</p>
-      <p>{details}</p>
+    <div className="flex flex-col items-center justify-center p-5">
+      <img src={img} alt={name} className="w-4/5 h-60 rounded-2xl object-contain" />
+      <h2 className="text-lg font-bold">{name}</h2>
+      <p className="text-sm text-gray-500">{category}</p>
+      <p className="text-green-600 font-semibold">${price.toFixed(2)}</p>
+      <p className="text-gray-700 text-xs mb-5">{details}</p>
     </div>
   )
 }
