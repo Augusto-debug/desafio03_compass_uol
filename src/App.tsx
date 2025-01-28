@@ -5,6 +5,7 @@ import SignUpScreen from './components/SignUpScreen';
 import Home from './components/Home';
 import Search from './components/Search';
 import AllProducts from './components/AllProducts';
+import ShoppingCart from './components/ShoppingCart';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/allProducts" element={<AllProducts />} />
+          <Route path="/shoppingCart" element={<ShoppingCart />} />
         </Routes>
     </div>
   );

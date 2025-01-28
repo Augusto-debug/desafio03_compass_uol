@@ -21,7 +21,7 @@ type Product = {
       rating: number;
       comment: string;
       postedAt: string;
-    }
+    }[]
   ];
   popularity: number;
   createdAt: string;
