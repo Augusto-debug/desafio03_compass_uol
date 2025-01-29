@@ -13,7 +13,7 @@ const ShoppingCart = () => {
   const { cart, updateQuantity, removeItem, clearCart, totalPrice } = context;
 
   return (
-    <div className="w-full h-full max-w-md mx-auto p-4">
+    <div className="w-full h-full p-4">
       <div className="flex justify-between items-center">
         <p>9:41</p>
         <img src="headerContainer.png" alt="" />
@@ -45,7 +45,7 @@ const ShoppingCart = () => {
                 <span>{item.quantity}</span>
                 <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 py-1 border rounded">+</button>
               </div>
-              <button onClick={() => removeItem(item.id)} className="ml-4 text-red-500">🗑</button>
+              <button onClick={() => removeItem(item.id)} className="ml-4 text-red-500"><img src="" alt="" /></button>
             </div>
           ))
         )}
@@ -55,7 +55,7 @@ const ShoppingCart = () => {
         <span>Total {cart.length} Items</span>
         <span>USD {totalPrice.toFixed(2)}</span>
       </div>
-      <button className="w-full mb-0 py-2 bg-green-500 text-white font-bold rounded">Proceed to Checkout</button>
+      <button className="w-full py-2 bg-green-500 mt-52 text-white font-bold rounded">Proceed to Checkout</button>
     </div>
   );
 };
