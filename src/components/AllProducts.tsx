@@ -34,7 +34,8 @@ const AllProducts = () => {
 
   const handleRedirectToHome = () => navigate("/home");
   const handleRedirectToShoppingCart = () => navigate("/shoppingCart");
-  const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
+  const handleRedirectToProduct = (id: string) =>
+    navigate(`/productDetails/${id}`);
 
   const applyFilters = () => {
     let filtered = [...products];
@@ -73,12 +74,12 @@ const AllProducts = () => {
   };
 
   return (
-    <div className="relative p-5">
+    <div className="relative p-5 ">
       <div className="flex justify-between items-center px-5 py-3">
         <p>9:41</p>
         <img src="headerContainer.png" alt="" />
       </div>
-      <div className="flex justify-between items-center my-5">
+      <div className="flex justify-between items-center my-5 mx-5">
         <img
           onClick={handleRedirectToHome}
           className="h-8 cursor-pointer object-contain"
@@ -96,7 +97,7 @@ const AllProducts = () => {
 
       <button
         onClick={() => setShowFilterModal(true)}
-        className="p-2 mt-5 bg-green-500 text-white rounded-lg"
+        className="p-2 mt-5 border-2 border-gray-300 w-4/5  text-black rounded-lg"
       >
         Filter
       </button>
@@ -175,28 +176,27 @@ const AllProducts = () => {
           </div>
         </div>
       )}
-
-      <div className="grid grid-cols-2 gap-4 mt-5">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            onClick={() => handleRedirectToProduct(product.id)}
-            className="p-4 border rounded-lg shadow-md"
-          >
-            <img
-              src={product.img}
-              alt={product.name}
-              className="w-full h-32 object-contain rounded-md"
-            />
-            <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
-            <p className="text-sm text-gray-500">{product.category}</p>
-            <p className="text-green-600 font-semibold">
-              ${product.price.toFixed(2)}
-            </p>
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-4 mt-5">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              onClick={() => handleRedirectToProduct(product.id)}
+              className="p-4 border rounded-lg shadow-md"
+            >
+              <img
+                src={product.img}
+                alt={product.name}
+                className="w-full h-32 object-contain rounded-md"
+              />
+              <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
+              <p className="text-sm text-gray-500">{product.category}</p>
+              <p className="text-green-600 font-semibold">
+                ${product.price.toFixed(2)}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
 
