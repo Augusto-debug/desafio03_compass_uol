@@ -26,13 +26,9 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
 
-  const handleRedirectToHome = () => {
-    navigate("/home");
-  };
-
-  const handleRedirectToShoppingCart = () => {
-    navigate("/shoppingCart");
-  };
+  const handleRedirectToHome = () => navigate("/home");
+  const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
+  const handleRedirectToShoppingCart = () => navigate("/shoppingCart");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,8 +47,11 @@ const Search = () => {
 
   return (
     <div className="p-5">
-      <Header />
-      <div className="flex justify-between items-center my-5">
+      <div className="flex justify-between items-center">
+          <p>9:41</p>
+          <img src="/headerContainer.png" alt="header" />
+        </div>
+      <div className="flex justify-between items-center my-10">
         <img
           onClick={handleRedirectToHome}
           className="h-8 cursor-pointer"
@@ -77,7 +76,7 @@ const Search = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="mt-10">
+      <div className="mt-10" onClick={() => handleRedirectToProduct(filteredProducts[0].id)}>
         {filteredProducts.length > 0 ? (
           <Item
             key={filteredProducts[0].id}
@@ -91,18 +90,20 @@ const Search = () => {
           <p className="text-xl text-gray-500 text-center mt-5">No products found</p>
         )}
       </div>
-      <div className="mt-10">
-        <p className="text-xl font-semibold mb-5">Popular product</p>
-        <div className="space-y-4">
+      <div className="mt-32">
+        <p className="text-2xl font-bold mb-5">Popular product</p>
+        <div className="space-y-4" >
           {products.slice(0, 3).map((product) => (
-            <Item
-              key={product.id}
-              name={product.name}
-              category={product.category}
-              price={product.price}
-              details={product.details}
-              img={product.img}
-            />
+            <div onClick={() => handleRedirectToProduct(product.id)}>
+              <Item
+                key={product.id}
+                name={product.name}
+                category={product.category}
+                price={product.price}
+                details={product.details}
+                img={product.img}
+              />
+            </div>
           ))}
         </div>
       </div>
