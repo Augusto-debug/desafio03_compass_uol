@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Product = {
@@ -34,6 +34,7 @@ const AllProducts = () => {
 
   const handleRedirectToHome = () => navigate("/home");
   const handleRedirectToShoppingCart = () => navigate("/shoppingCart");
+  const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
 
   const applyFilters = () => {
     let filtered = [...products];
@@ -47,10 +48,16 @@ const AllProducts = () => {
           filtered.sort((a, b) => b.popularity - a.popularity);
           break;
         case "Newest":
-          filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          filtered.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
           break;
         case "Oldest":
-          filtered.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+          filtered.sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
           break;
         case "High Price":
           filtered.sort((a, b) => b.price - a.price);
@@ -62,7 +69,7 @@ const AllProducts = () => {
     }
 
     setFilteredProducts(filtered);
-    setShowFilterModal(false); 
+    setShowFilterModal(false);
   };
 
   return (
@@ -74,13 +81,13 @@ const AllProducts = () => {
       <div className="flex justify-between items-center my-5">
         <img
           onClick={handleRedirectToHome}
-          className="h-8 cursor-pointer"
+          className="h-8 cursor-pointer object-contain"
           src="chevron-left.png"
           alt="Voltar"
         />
         <img
           onClick={handleRedirectToShoppingCart}
-          className="h-8 cursor-pointer"
+          className="h-8 cursor-pointer object-contain"
           src="shopping-cart.png"
           alt="Carrinho"
         />
@@ -108,17 +115,29 @@ const AllProducts = () => {
             <div className="flex gap-2 mb-4">
               <button
                 className={`px-4 py-2 rounded-full ${
-                  selectedCategory === "headphones" ? "bg-green-500 text-white" : "bg-gray-200"
+                  selectedCategory === "headphones"
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-200"
                 }`}
-                onClick={() => setSelectedCategory(selectedCategory === "headphones" ? null : "headphones")}
+                onClick={() =>
+                  setSelectedCategory(
+                    selectedCategory === "headphones" ? null : "headphones"
+                  )
+                }
               >
                 Headphone
               </button>
               <button
                 className={`px-4 py-2 rounded-full ${
-                  selectedCategory === "headsets" ? "bg-green-500 text-white" : "bg-gray-200"
+                  selectedCategory === "headsets"
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-200"
                 }`}
-                onClick={() => setSelectedCategory(selectedCategory === "headsets" ? null : "headsets")}
+                onClick={() =>
+                  setSelectedCategory(
+                    selectedCategory === "headsets" ? null : "headsets"
+                  )
+                }
               >
                 Headset
               </button>
@@ -126,11 +145,19 @@ const AllProducts = () => {
 
             <h3 className="text-lg font-semibold mb-2">Sort By</h3>
             <div className="grid grid-cols-2 gap-2 mb-4">
-              {["Popularity", "Newest", "Oldest", "High Price", "Low Price"].map((option) => (
+              {[
+                "Popularity",
+                "Newest",
+                "Oldest",
+                "High Price",
+                "Low Price",
+              ].map((option) => (
                 <button
                   key={option}
                   className={`px-4 py-2 rounded-lg ${
-                    sortBy === option ? "bg-green-500 text-white" : "bg-gray-200"
+                    sortBy === option
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200"
                   }`}
                   onClick={() => setSortBy(sortBy === option ? null : option)}
                 >
@@ -151,11 +178,21 @@ const AllProducts = () => {
 
       <div className="grid grid-cols-2 gap-4 mt-5">
         {filteredProducts.map((product) => (
-          <div key={product.id} className="p-4 border rounded-lg shadow-md">
-            <img src={product.img} alt={product.name} className="w-full h-32 object-contain rounded-md" />
+          <div
+            key={product.id}
+            onClick={() => handleRedirectToProduct(product.id)}
+            className="p-4 border rounded-lg shadow-md"
+          >
+            <img
+              src={product.img}
+              alt={product.name}
+              className="w-full h-32 object-contain rounded-md"
+            />
             <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
             <p className="text-sm text-gray-500">{product.category}</p>
-            <p className="text-green-600 font-semibold">${product.price.toFixed(2)}</p>
+            <p className="text-green-600 font-semibold">
+              ${product.price.toFixed(2)}
+            </p>
           </div>
         ))}
       </div>
