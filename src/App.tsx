@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Search from './components/Search';
 import AllProducts from './components/AllProducts';
 import ShoppingCart from './components/ShoppingCart';
-
+import ProductDetails from './components/ProductDetails';
 function App() {
   return (
     <div className="App">
@@ -17,6 +17,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/allProducts" element={<AllProducts />} />
           <Route path="/shoppingCart" element={<ShoppingCart />} />
+          <Route path="/productDetails/:id" element={<ProductDetails />} />
         </Routes>
     </div>
   );
