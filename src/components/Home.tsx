@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Item from "./Item";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+// import { Carousel } from "@material-tailwind/react";
+ 
 
 type Product = {
   id: string;
@@ -29,13 +31,9 @@ type Product = {
 
 const Home = () => {
   const navigate = useNavigate();
-  const handleRedirectToSearch = () => {
-    navigate("/search");
-  };
-
-  const handleRedirectToAllProducts = () => {
-    navigate("/allProducts");
-  };
+  const handleRedirectToSearch = () => navigate("/search");
+  const handleRedirectToAllProducts = () =>  navigate("/allProducts");
+  const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
 
   const [userName, setUserName] = useState<string | null>(null);
   const [data, setData] = useState<Product[]>([]);
@@ -92,14 +90,14 @@ const Home = () => {
         </div>
       </header>
       <main className="bg-gray-100 rounded-3xl flex w-full justify-center items-center flex-col">
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="flex my-5 m-auto items-center">
             <input
               type="button"
               value="HeadPhone"
               className={`p-2 mx-8 flex cursor-pointer rounded-lg ${
                 selectedCategory === "headphones"
-                  ? "bg-blue-500 text-white"
+                  ? "bg-green-500 text-white"
                   : "bg-gray-200"
               }`}
               onClick={() => handleFilter("headphones")}
@@ -109,7 +107,7 @@ const Home = () => {
               value="HeadSet"
               className={`p-2 flex cursor-pointer rounded-lg ${
                 selectedCategory === "headsets"
-                  ? "bg-blue-500 text-white"
+                  ? "bg-green-500 text-white"
                   : "bg-gray-200"
               }`}
               onClick={() => handleFilter("headsets")}
@@ -119,12 +117,10 @@ const Home = () => {
             showThumbs={false}
             autoPlay={true}
             infiniteLoop
-            className="w-full mx-auto"
-            width="100%"
           >
             {filteredData &&
               filteredData.map((item) => (
-                <div key={item.id}>
+                <div key={item.id} onClick={() => handleRedirectToProduct(item.id)}>
                   <Item
                     name={item.name}
                     category={item.category}
@@ -136,10 +132,10 @@ const Home = () => {
               ))}
           </Carousel>
         </div>
-        <div className="w-full">
-          <div className="flex justify-between">
-            <p className="ml-5">Featured Products</p>
-            <button onClick={handleRedirectToAllProducts} className="mr-5">
+        <div className="w-full my-10 flex flex-col ">
+          <div className="flex justify-around mb-10">
+            <p className="text-base font-normal">Featured Products</p>
+            <button onClick={handleRedirectToAllProducts} className="text-base font-normal text-gray-400">
               See All
             </button>
           </div>
@@ -149,10 +145,9 @@ const Home = () => {
               showThumbs={false}
               autoPlay={true}
               infiniteLoop
-              width="100%"
             >
               {data.slice(0, 3).map((item) => (
-                <div key={item.id}>
+                <div key={item.id} onClick={() => handleRedirectToProduct(item.id)}>
                   <Item
                     name={item.name}
                     category={item.category}
