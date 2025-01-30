@@ -12,12 +12,12 @@ const Item = ({ name, category, price, details, img }: ItemProps) => {
   return (
     <div className="flex flex-col items-start cursor-pointer w-4/5 m-auto rounded-2xl bg-white justify-center p-5">
       <div className="flex justify-between items-center w-full">
-        <h2 className="text-4xl mr-10 font-bold">{name}</h2>
+        <h2 className="font-medium ">{name}</h2>
         <div className="rounded-3xl h-full">
           <img
             src={img}
             alt={name}
-            className="rounded-2xl h-44 object-contain"
+            className="rounded-2xl h-44 w-full object-cover"
           />
         </div>
       </div>
