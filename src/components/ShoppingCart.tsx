@@ -14,10 +14,6 @@ const ShoppingCart = () => {
 
   return (
     <div className="w-full h-full p-4">
-      <div className="flex justify-between items-center">
-        <p>9:41</p>
-        <img src="headerContainer.png" alt="" />
-      </div>
       <div className="flex justify-between mt-5 items-center">
       <img
           onClick={handleRedirectToHome}

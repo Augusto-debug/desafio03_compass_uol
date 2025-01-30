@@ -75,11 +75,6 @@
 
     return (
       <div className="p-5 max-w-md mx-auto">
-        <div className="flex justify-between items-center">
-          <p className="font-semibold">9:41</p>
-          <img src="/headerContainer.png" alt="header" />
-        </div>
-
         <div className="mt-5">
           <p className="text-green-500 font-semibold">USD {product.price}</p>
           <h1 className="text-2xl font-bold">{product.name}</h1>

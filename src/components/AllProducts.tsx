@@ -75,10 +75,6 @@ const AllProducts = () => {
 
   return (
     <div className="relative p-5 ">
-      <div className="flex justify-between items-center px-5 py-3">
-        <p>9:41</p>
-        <img src="headerContainer.png" alt="" />
-      </div>
       <div className="flex justify-between items-center my-5 mx-5">
         <img
           onClick={handleRedirectToHome}

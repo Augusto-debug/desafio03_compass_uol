@@ -15,14 +15,6 @@ const SignUpScreen = () => {
         alt="background image"
         className="w-full h-full object-cover absolute"
       />
-      <div className="flex justify-between items-center p-5 absolute top-0 w-full">
-        <p className="text-3xl text-white">9:41</p>
-        <img
-          className="h-6 filter brightness-0 invert"
-          src="headerContainer.png"
-          alt=""
-        />
-      </div>
       <div className="absolute top-28 w-full flex items-center justify-center flex-col">
         <p className="text-7xl text-white font-bold">Audio</p>
         <p className="text-3xl text-white py-10">

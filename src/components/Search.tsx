@@ -47,10 +47,7 @@ const Search = () => {
 
   return (
     <div className="p-5">
-      <div className="flex justify-between items-center">
-          <p>9:41</p>
-          <img src="/headerContainer.png" alt="header" />
-        </div>
+
       <div className="flex justify-between items-center my-10">
         <img
           onClick={handleRedirectToHome}

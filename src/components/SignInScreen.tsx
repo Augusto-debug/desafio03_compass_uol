@@ -9,33 +9,29 @@ const SignScreen = () => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center flex-col relative">
+    <div className="w-full h-screen flex flex-col justify-between relative">
       <img
         src="/backgroundImageLoginScreen.svg"
         alt="background image"
-        className="w-full h-full object-cover absolute"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="flex justify-between items-center p-5 absolute top-0 w-full">
-        <p className="text-3xl text-white">9:41</p>
-        <img
-          className="h-6 filter brightness-0 invert"
-          src="headerContainer.png"
-          alt=""
-        />
-      </div>
-      <div className="absolute top-28 w-full flex items-center justify-center flex-col">
-        <p className="text-7xl text-white font-bold">Audio</p>
-        <p className="text-3xl text-white py-10">
+
+      <div className="absolute top-28 w-full flex flex-col items-center text-center">
+        <p className="text-5xl sm:text-6xl md:text-7xl font-bold text-white">
+          Audio
+        </p>
+        <p className="text-xl sm:text-2xl md:text-3xl text-white mt-5">
           It's modular and designed to last
         </p>
       </div>
-      <div className="absolute w-full flex flex-col items-center bottom-0">
+
+      <div className="absolute bottom-0 w-full flex flex-col items-center px-5">
         <AuthButton mode="login" />
-        <p className="my-5 text-white">
+        <p className="mt-5 text-white text-sm sm:text-base">
           Don't have an account?{" "}
           <span
             onClick={handleSignUp}
-            className="text-green-600 cursor-pointer"
+            className="text-green-500 font-semibold cursor-pointer hover:underline"
           >
             Sign Up Here
           </span>
