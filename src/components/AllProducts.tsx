@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 type Product = {
   id: string;
@@ -19,7 +20,7 @@ const AllProducts = () => {
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string | null>(null);
-
+  const cart = useContext(CartContext);
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch(
@@ -76,17 +77,24 @@ const AllProducts = () => {
   return (
     <div className="relative p-5 ">
       <div className="flex justify-between items-center my-5 mx-5">
-        <img
-          onClick={handleRedirectToHome}
-          className="h-8 cursor-pointer object-contain"
-          src="chevron-left.png"
-          alt="Voltar"
-        />
+        <div>
+          <img
+            onClick={handleRedirectToHome}
+            className="h-8 w-8"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwElEQVR4nO3YIUpFYRCG4UcFQZNgMglGm8F6s9uyuQGDC7CYzYJXBBVXYBNMFjEYTFomqVmY4XvgLOCFc84/8xMREREREb9t4xbXGtvCI75wr6lNLCviCTsa2sBVRTxjV0PruKyIF+xpaA0XFfGKfQ2t4rwi3nCgoRWcVcQ7DjWNOK2IDyw0dVIRnzjS1HFFdHxupoQsR75aoz72Mb/fUQfiqBFl1NA4aowftVj9teo+GHD5cPdzJIiIiIiICP/sG0CFktwMi6bqAAAAAElFTkSuQmCC"
+            alt="long-arrow-left"
+          />
+          {cart && cart.cart.length > 0 && (
+            <div className="absolute right-10 top-7 text-black w-6 h-6 flex justify-center items-center rounded-full">
+              {cart.cart.length}
+            </div>
+          )}
+        </div>
         <img
           onClick={handleRedirectToShoppingCart}
-          className="h-8 cursor-pointer object-contain"
-          src="shopping-cart.png"
-          alt="Carrinho"
+          className="h-8 w-8"
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACUElEQVR4nO2ZPWtUQRSGn9WAEsS0foUQNRo/QCTY5A8YCaKVnaCSqBERCQh2VoKNjQgWFhqMJhJEghEri5hSrGwUAgG/BRcNgkXErBx4L1wk7JJ1ztw7kAem2b3znvMus3PPmYEVykc/8AGo1RnfgRfACaBCSfnYwMS/Y7SsZt7nkny3xPeW9CZgEPip545TQg7JjJnoa/DsaRl5ReKsAb7JzC4SZ1RGhkicQRkZJ3F2yMjXsu5ezWzZ3STOAxk5S+KckZExEqdbRj6v/E9KxPgyazSPMRPCyFAJjMyGMLI79z+JzV3FvhJCzF6GXyS4k3isUxW+CGwNJTohI1YVx+KUYj4PKXpeoveJx4xHT7RXop+IQ5eW1DzQGlK4ouKxpiDeXFWs2x7ijyQ+gC+r1MVarF6PABckfg9fDirOW6+yaJ8CWN8fo5K47BWgkuvjtznFaAN+AX+Adhx5LCO2x3twTvrPcOaiAo046b+U/jGc2V/ngO9/2SPtKrCWCFtjVQE7A2tfl+5NIjGpgHbQHYoWVdem20MkhhXwTkDNI9J8TUR6FHTOYTccJiKrdY8Sugv8DWwgMk8Cm1gEblAAl5TALRLngIy8IXFa1PTUdMuVNJMycpLEGZCRaRJnfa5cuQZ0aGtOkqPAQsBteLpIM4cDGlkANhZlZERJ2Etys8ZUg3uVsTpz7BK2ELKq1ZLJaM/1FktRrTPnBwWRvU+2LCOp+SbmuJOdd00pMRtP9dlEwDlRrrGz05X8sOWzPeAcYmBr/aGWjA37VRsl1Mwc/gIXmFSH9pqNAQAAAABJRU5ErkJggg=="
+          alt="shopping-cart--v1"
         />
       </div>
       <h1 className="text-3xl font-black">All Products</h1>
@@ -172,27 +180,27 @@ const AllProducts = () => {
           </div>
         </div>
       )}
-        <div className="grid grid-cols-2 gap-4 mt-5">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => handleRedirectToProduct(product.id)}
-              className="p-4 border rounded-lg shadow-md"
-            >
-              <img
-                src={product.img}
-                alt={product.name}
-                className="w-full h-32 object-contain rounded-md"
-              />
-              <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
-              <p className="text-sm text-gray-500">{product.category}</p>
-              <p className="text-green-600 font-semibold">
-                ${product.price.toFixed(2)}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 gap-4 mt-5">
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            onClick={() => handleRedirectToProduct(product.id)}
+            className="p-4 border rounded-lg shadow-md"
+          >
+            <img
+              src={product.img}
+              alt={product.name}
+              className="w-full h-32 object-contain rounded-md"
+            />
+            <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
+            <p className="text-sm text-gray-500">{product.category}</p>
+            <p className="text-green-600 font-semibold">
+              ${product.price.toFixed(2)}
+            </p>
+          </div>
+        ))}
       </div>
+    </div>
   );
 };
 

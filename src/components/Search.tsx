@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import Header from "./Header";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import Item from "./Item";
 
@@ -25,7 +25,7 @@ const Search = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
-
+    const cart = useContext(CartContext);
   const handleRedirectToHome = () => navigate("/home");
   const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
   const handleRedirectToShoppingCart = () => navigate("/shoppingCart");
@@ -48,21 +48,30 @@ const Search = () => {
   return (
     <div className="p-5">
 
-      <div className="flex justify-between items-center my-10">
-        <img
-          onClick={handleRedirectToHome}
-          className="h-8 cursor-pointer"
-          src="chevron-left.png"
-          alt="Voltar"
-        />
-        <p className="text-2xl font-semibold">Search</p>
-        <img
-          onClick={handleRedirectToShoppingCart}
-          className="h-8 cursor-pointer"
-          src="shopping-cart.png"
-          alt="Carrinho"
-        />
+<div className="flex justify-between items-center my-10">
+  <div className="relative">
+    <img
+      onClick={handleRedirectToHome}
+      className="h-8 cursor-pointer"
+      src="chevron-left.png"
+      alt="Voltar"
+    />
+   </div>
+  <p className="text-2xl font-semibold">Search</p>
+  <div className="relative">
+    <img
+      onClick={handleRedirectToShoppingCart}
+      className="h-8 cursor-pointer"
+      src="shopping-cart.png"
+      alt="Carrinho"
+    />
+    {cart && cart.cart.length > 0 && (
+      <div className="absolute -top-4 right-0 text-black rounded-full w-6 h-6 flex items-center justify-center">
+        {cart.cart.length}
       </div>
+    )}
+  </div>
+</div>
       <div className="flex items-center bg-gray-100 rounded-full p-3 w-full max-w-lg mx-auto">
         <img src="search.png" className="h-6 mx-2" alt="searchIcon" />
         <input
