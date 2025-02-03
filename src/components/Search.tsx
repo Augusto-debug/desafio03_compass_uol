@@ -25,7 +25,7 @@ const Search = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
-    const cart = useContext(CartContext);
+  const cart = useContext(CartContext);
   const handleRedirectToHome = () => navigate("/home");
   const handleRedirectToProduct = (id: string) => navigate(`/productDetails/${id}`);
   const handleRedirectToShoppingCart = () => navigate("/shoppingCart");

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import Item from "./Item";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-// import { Carousel } from "@material-tailwind/react";
  
 
 type Product = {
